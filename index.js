@@ -2,12 +2,32 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import { MenuRoute } from "./src/routes/MenuRouter.js";
-import { GetAllItemsRoute } from "./src/routes/GetAllItemsRouter.js";
+import multer from "multer";
+import { MenuRoute } from "./src/routes/MenuRoute.js";
+import { GetAllItemsRoute } from "./src/routes/GetAllItemsRoute.js";
 import { GetItemRoute } from "./src/routes/GetItemRoute.js";
-// import MachineTool from "./src/models/MachineTool.js";
+import { AuthRoute } from "./src/routes/AuthRoute.js";
+import { GetSubCategoryRoute } from "./src/routes/GetSubCategoryRoute.js";
+import { GetCategoryRoute } from "./src/routes/GetCategoryRoute.js";
 
 const app = express();
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (_, file, cb) => {
+    file.originalname = "file.jpg";
+    const fileNameArray = file.originalname.split(".");
+    const d = new Date();
+    const newFileName = `${d.getTime()}.${
+      fileNameArray[fileNameArray.length - 1]
+    }`;
+    file.originalname = newFileName;
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
 
 dotenv.config();
 
@@ -26,14 +46,23 @@ mongoose
 app.use(cors());
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.status(200).send("server run!!!");
 });
 
+app.post("/upload", upload.single("image"), (req, res) => {
+  res.json({ url: `/uploads/${req.file.originalname}` });
+});
+
 app.use("/api", MenuRoute);
 app.use("/api", GetAllItemsRoute);
 app.use("/api", GetItemRoute);
+app.use("/api", AuthRoute);
+
+app.use("/api", GetSubCategoryRoute);
+app.use("/api", GetCategoryRoute);
 
 app.listen(PORT, (err) => {
   if (err) {

@@ -10,7 +10,15 @@ const MachineToolSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    categoryEn: {
+      type: String,
+      require: true,
+    },
     subCategory: {
+      type: String,
+      require: true,
+    },
+    subCategoryEn: {
       type: String,
       require: true,
     },
@@ -21,6 +29,10 @@ const MachineToolSchema = new mongoose.Schema(
     photos: {
       type: Array,
       require: false,
+    },
+    price: {
+      type: String,
+      default: "договорная",
     },
     description: {
       type: String,
