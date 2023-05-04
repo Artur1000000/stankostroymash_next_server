@@ -5,12 +5,12 @@ import dotenv from "dotenv";
 import multer from "multer";
 import fs from 'fs';
 import { MenuRoute } from "./src/routes/MenuRoute.js";
-import { GetAllItemsRoute } from "./src/routes/GetAllItemsRoute.js";
 import { GetItemRoute } from "./src/routes/GetItemRoute.js";
 import { AuthRoute } from "./src/routes/AuthRoute.js";
 import { GetSubCategoryRoute } from "./src/routes/GetSubCategoryRoute.js";
 import { GetCategoryRoute } from "./src/routes/GetCategoryRoute.js";
 import { SearchRoute } from "./src/routes/SearchRoute.js";
+import { DeleteImageRoute } from "./src/routes/DeleteImageRoute.js";
 
 const app = express();
 
@@ -62,11 +62,11 @@ app.post("/upload", upload.single("image"), (req, res) => {
 });
 
 app.use("/api", MenuRoute);
-app.use("/api", GetAllItemsRoute);
 app.use("/api", GetItemRoute);
 app.use("/api", AuthRoute);
 app.use("/api", SearchRoute);
 
+app.use("/api", DeleteImageRoute)
 app.use("/api", GetSubCategoryRoute);
 app.use("/api", GetCategoryRoute);
 
