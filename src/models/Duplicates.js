@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MachineToolSchema = new mongoose.Schema(
+const DuplicatesSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -11,14 +11,6 @@ const MachineToolSchema = new mongoose.Schema(
       require: true,
     },
     categoryEn: {
-      type: String,
-      require: true,
-    },
-    subCategory: {
-      type: String,
-      require: true,
-    },
-    subCategoryEn: {
       type: String,
       require: true,
     },
@@ -47,4 +39,4 @@ const MachineToolSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("MachineTools", MachineToolSchema);
+export default mongoose.model("Duplicates", DuplicatesSchema);

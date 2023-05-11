@@ -4,13 +4,17 @@ import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 import fs from 'fs';
-import { MenuRoute } from "./src/routes/MenuRoute.js";
 import { GetItemRoute } from "./src/routes/GetItemRoute.js";
 import { AuthRoute } from "./src/routes/AuthRoute.js";
 import { GetSubCategoryRoute } from "./src/routes/GetSubCategoryRoute.js";
 import { GetCategoryRoute } from "./src/routes/GetCategoryRoute.js";
 import { SearchRoute } from "./src/routes/SearchRoute.js";
 import { DeleteImageRoute } from "./src/routes/DeleteImageRoute.js";
+import { GetMeAuthRoute } from "./src/routes/GetMeAuthRoute.js";
+import { ChangePasswordRoute } from "./src/routes/ChangePasswordRoute.js";
+import { getMe } from "./src/utils/getMe.js";
+import { AddItemRoute } from "./src/routes/AddItemRoute.js";
+import { AddItemDuplicatesRoute } from "./src/routes/AddItemDuplicatesRoute.js";
 
 const app = express();
 
@@ -24,9 +28,8 @@ const storage = multer.diskStorage({
   filename: (_, file, cb) => {
     const fileNameArray = file.originalname.split(".");
     const d = new Date();
-    const newFileName = `${d.getTime()}.${
-      fileNameArray[fileNameArray.length - 1]
-    }`;
+    const newFileName = `${d.getTime()}.${fileNameArray[fileNameArray.length - 1]
+      }`;
     file.originalname = newFileName;
     cb(null, file.originalname);
   },
@@ -57,15 +60,19 @@ app.get("/", (req, res) => {
   res.status(200).send("server run!!!");
 });
 
-app.post("/upload", upload.single("image"), (req, res) => {
+app.post("/upload",getMe, upload.single("image"), (req, res) => {
   res.json({ url: `/uploads/${req.file.originalname}` });
 });
 
-app.use("/api", MenuRoute);
 app.use("/api", GetItemRoute);
-app.use("/api", AuthRoute);
 app.use("/api", SearchRoute);
 
+app.use("/api", AuthRoute);
+app.use("/api", GetMeAuthRoute);
+app.use("/api", ChangePasswordRoute);
+
+app.use("/api", AddItemRoute)
+app.use("/api", AddItemDuplicatesRoute)
 app.use("/api", DeleteImageRoute)
 app.use("/api", GetSubCategoryRoute);
 app.use("/api", GetCategoryRoute);
