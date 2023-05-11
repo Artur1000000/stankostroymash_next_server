@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { Auth } from "../controllers/Auth.js";
-import { firstLogin } from "../utils/FirstLogin.js";
+import { firstIteration } from "../utils/firstIteration.js";
 
 const AuthRoute = new Router();
 
-AuthRoute.post("/auth", firstLogin, Auth);
+AuthRoute.post("/auth", firstIteration, Auth);
 
 export { AuthRoute };

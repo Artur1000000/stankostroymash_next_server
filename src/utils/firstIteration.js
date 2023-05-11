@@ -1,7 +1,7 @@
-import Admin from "../models/Admin.js";
 import bcrypt from "bcrypt";
+import Admin from "../models/Admin.js";
 
-export const firstLogin = async (req, res, next) => {
+export const firstIteration = async (req, res, next) => {
     const admin = await Admin.find();
     if (!admin.length) {
         const { password, email } = req.body;
