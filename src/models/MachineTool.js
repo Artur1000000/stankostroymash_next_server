@@ -33,11 +33,15 @@ const MachineToolSchema = new mongoose.Schema(
     photoPrimary: {
       type: String,
       require: false,
-      default: null
+      default: null,
     },
     price: {
       type: String,
       default: "договорная",
+    },
+    shortDescription: {
+      type: String,
+      require: true,
     },
     description: {
       type: String,

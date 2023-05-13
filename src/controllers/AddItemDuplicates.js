@@ -9,6 +9,7 @@ export const AddItemDuplicates = async (req, res) => {
             photos: req.body.pathImage,
             photoPrimary: req.body.photoPrimary,
             price: req.body.state.price,
+            shortDescription: req.body.shortText,
             description: req.body.text
         });
         await item.save();

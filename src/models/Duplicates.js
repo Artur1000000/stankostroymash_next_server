@@ -31,6 +31,10 @@ const DuplicatesSchema = new mongoose.Schema(
       type: String,
       default: "договорная",
     },
+    shortDescription: {
+      type: String,
+      require: true,
+    },
     description: {
       type: String,
       require: true,
