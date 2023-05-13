@@ -21,6 +21,6 @@ export const GetMeAuth = async (req, res) => {
     }
     res.status(200).json({ success: true });
   } catch (e) {
-    res.status(400).json({ message: e, token: req.body.token });
+    res.status(400).json({ message: e });
   }
 };
