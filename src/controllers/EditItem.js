@@ -6,7 +6,6 @@ export const EditItem = async (req, res) => {
     let path = "/";
     if (req.body.subCategory) {
       const del = await MachineTool.deleteOne({ _id: req.body.id });
-      console.log(del);
       if(!del.deletedCount){
         await Duplicates.deleteOne({ _id: req.body.id });
       }
