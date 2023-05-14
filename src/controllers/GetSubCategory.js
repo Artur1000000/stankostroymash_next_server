@@ -2,7 +2,7 @@ import MachineTool from "../models/MachineTool.js";
 
 export const GetSubCategory = async (req, res) => {
   try {
-    const tools = await MachineTool.find({subCategoryEn:req.query.subcategory});
+    const tools = await MachineTool.find({subCategoryEn:req.query.subcategory}).select({shortDescription:0, photos:0});
 
     res.status(200).json(tools);
   } catch (e) {

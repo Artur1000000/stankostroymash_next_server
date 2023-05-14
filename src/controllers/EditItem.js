@@ -5,8 +5,11 @@ export const EditItem = async (req, res) => {
   try {
     let path = "/";
     if (req.body.subCategory) {
-      await MachineTool.deleteOne({ _id: req.body.id });
-
+      const del = await MachineTool.deleteOne({ _id: req.body.id });
+      console.log(del);
+      if(!del.deletedCount){
+        await Duplicates.deleteOne({ _id: req.body.id });
+      }
       const update = await MachineTool({
         title: req.body.state.title,
         category: req.body.category.title,
@@ -28,7 +31,10 @@ export const EditItem = async (req, res) => {
         "/" +
         update._id;
     } else {
-      await MachineTool.deleteOne({ _id: req.body.id });
+      const del = await Duplicates.deleteOne({ _id: req.body.id });
+      if(!del.deletedCount){
+        await MachineTool.deleteOne({ _id: req.body.id })
+      }
       const update = await Duplicates({
         title: req.body.state.title,
         category: req.body.category.title,
