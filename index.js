@@ -15,6 +15,10 @@ import { ChangePasswordRoute } from "./src/routes/ChangePasswordRoute.js";
 import { getMe } from "./src/utils/getMe.js";
 import { AddItemRoute } from "./src/routes/AddItemRoute.js";
 import { AddItemDuplicatesRoute } from "./src/routes/AddItemDuplicatesRoute.js";
+import { DeleteItemRoute } from "./src/routes/DeleteItemRoute.js";
+import { GetDuplicatesRoute } from "./src/routes/GetDuplicatesRoute.js";
+import { GetItemDuplicatesRoute } from "./src/routes/GetItemDuplicatesRoute.js";
+import { EditItemRoute } from "./src/routes/EditItemRoute.js";
 
 const app = express();
 
@@ -65,17 +69,21 @@ app.post("/upload",getMe, upload.single("image"), (req, res) => {
 });
 
 app.use("/api", GetItemRoute);
+app.use("/api", GetItemDuplicatesRoute);
 app.use("/api", SearchRoute);
 
 app.use("/api", AuthRoute);
 app.use("/api", GetMeAuthRoute);
 app.use("/api", ChangePasswordRoute);
 
+app.use("/api", EditItemRoute)
+app.use("/api", DeleteItemRoute)
 app.use("/api", AddItemRoute)
 app.use("/api", AddItemDuplicatesRoute)
 app.use("/api", DeleteImageRoute)
 app.use("/api", GetSubCategoryRoute);
 app.use("/api", GetCategoryRoute);
+app.use("/api", GetDuplicatesRoute);
 
 app.listen(PORT, (err) => {
   if (err) {
