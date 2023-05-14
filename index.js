@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
-import fs from 'fs';
+import fs from "fs";
 import { GetItemRoute } from "./src/routes/GetItemRoute.js";
 import { AuthRoute } from "./src/routes/AuthRoute.js";
 import { GetSubCategoryRoute } from "./src/routes/GetSubCategoryRoute.js";
@@ -32,8 +32,9 @@ const storage = multer.diskStorage({
   filename: (_, file, cb) => {
     const fileNameArray = file.originalname.split(".");
     const d = new Date();
-    const newFileName = `${d.getTime()}.${fileNameArray[fileNameArray.length - 1]
-      }`;
+    const newFileName = `${d.getTime()}.${
+      fileNameArray[fileNameArray.length - 1]
+    }`;
     file.originalname = newFileName;
     cb(null, file.originalname);
   },
@@ -64,7 +65,7 @@ app.get("/", (req, res) => {
   res.status(200).send("server run!!!");
 });
 
-app.post("/upload",getMe, upload.single("image"), (req, res) => {
+app.post("/upload", getMe, upload.single("image"), (req, res) => {
   res.json({ url: `/uploads/${req.file.originalname}` });
 });
 
@@ -76,11 +77,11 @@ app.use("/api", AuthRoute);
 app.use("/api", GetMeAuthRoute);
 app.use("/api", ChangePasswordRoute);
 
-app.use("/api", EditItemRoute)
-app.use("/api", DeleteItemRoute)
-app.use("/api", AddItemRoute)
-app.use("/api", AddItemDuplicatesRoute)
-app.use("/api", DeleteImageRoute)
+app.use("/api", EditItemRoute);
+app.use("/api", DeleteItemRoute);
+app.use("/api", AddItemRoute);
+app.use("/api", AddItemDuplicatesRoute);
+app.use("/api", DeleteImageRoute);
 app.use("/api", GetSubCategoryRoute);
 app.use("/api", GetCategoryRoute);
 app.use("/api", GetDuplicatesRoute);

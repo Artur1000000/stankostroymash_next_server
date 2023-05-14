@@ -10,15 +10,38 @@ export const DeleteItem = async (req, res) => {
       if (!del) {
         return res.status(401).json({ message: e });
       }
-      await del.photos.map((item) => {
-        fs.unlinkSync(`.${item}`);
+
+      fs.readdir("./uploads", (err, files) => {
+        if (err) throw err;
+        files.map((file) => {
+          del.photos.map((photo) => {
+            let f = "./uploads" + file;
+            if (f === photo) {
+              fs.unlinkSync(`.${photo}`);
+            }
+          });
+        });
       });
+
       await Duplicates.deleteOne({ _id: id });
     } else {
       const del = await MachineTool.findById({ _id: id });
       if (!del) {
         return res.status(401).json({ message: e });
       }
+
+      fs.readdir("./uploads", (err, files) => {
+        if (err) throw err;
+        files.map((file) => {
+          del.photos.map((photo) => {
+            let f = "./uploads" + file;
+            if (f === photo) {
+              fs.unlinkSync(`.${photo}`);
+            }
+          });
+        });
+      });
+
       await del.photos.map((item) => {
         fs.unlinkSync(`.${item}`);
       });
