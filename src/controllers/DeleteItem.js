@@ -42,9 +42,6 @@ export const DeleteItem = async (req, res) => {
         });
       });
 
-      await del.photos.map((item) => {
-        fs.unlinkSync(`.${item}`);
-      });
       await MachineTool.deleteOne({ _id: id });
     }
     res.status(200).json({ message: true });
